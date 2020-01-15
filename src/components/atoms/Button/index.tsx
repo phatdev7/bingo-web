@@ -23,11 +23,14 @@ const Button: React.FC<IProps> = props => {
         {...props}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
+        onTouchStart={onMouseDown}
+        onTouchEnd={onMouseUp}
         onMouseLeave={onMouseLeave}
         style={{
           top: pressIn ? '4px' : 0,
           borderBottomLeftRadius: pressIn ? '12px' : '8px',
           borderBottomRightRadius: pressIn ? '12px' : '8px',
+          ...props.style,
         }}
       >
         {props.children}

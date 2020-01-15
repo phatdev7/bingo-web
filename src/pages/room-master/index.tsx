@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Main, Content, FormDiv } from './styled';
+import { Link, Redirect } from 'react-router-dom';
+import { Main, Member, MemberItem, MemberName } from './styled';
 import Form from 'components/molecules/Form';
 import Input from 'components/atoms/Input';
 import Button from 'components/atoms/Button';
@@ -14,7 +14,7 @@ import REST from 'utils/api';
 interface IProps {
   requestAccessToken: (callback: Function) => void;
   getCurrentRoom: () => void;
-  access_token: {
+  user: {
     token: string;
   };
 }
@@ -23,9 +23,18 @@ interface IRoom {
   title: string;
 }
 
+interface IUser {
+  name: string;
+  token: string;
+  index: string;
+}
+
+const members: any[] = [];
+
 const RoomMaster: React.FC<IProps> = props => {
   const [room, setRoom] = useState<IRoom>({ title: '' });
   const [code, setCode] = useState('');
+  const [members2, setMembers] = useState<IUser[]>([]);
   const [redirectURL, setRedirecURL] = useState('');
 
   useEffect(() => {
@@ -34,19 +43,29 @@ const RoomMaster: React.FC<IProps> = props => {
     REST.get(`room/${id}`).then(res => {
       setRoom(res.data);
     });
+
     REST.get(`room/${id}/current_code`)
       .then(res => {
         setCode(res.data);
       })
       .catch(err => {});
 
-    // const sendData = SocketService.makeSendData(Commands.joinRoom);
-    // sendData.addParam('room_id', id);
-    // SocketService.send(sendData);
+    const sendData = SocketService.makeSendData(Commands.joinRoom);
+    sendData.addParam('room_id', id);
+    sendData.addParam('user', props.user);
+    SocketService.send(sendData);
 
     SocketService.register(Commands.joinRoom, (params: any) => {
+      if (params.error) {
+        setRedirecURL('/');
+      }
+    });
+
+    SocketService.register(Commands.scanQRCode, (params: any) => {
       if (!params.error) {
-        // props.navigation.navigate('BingoCardScreen');
+        setCode(params.new_code);
+        // setMembers([...members, { ...params.user, index: params.new_code }]);
+        members.push({ ...params.user, index: params.new_code });
       }
     });
   }, []);
@@ -54,20 +73,31 @@ const RoomMaster: React.FC<IProps> = props => {
   if (redirectURL) {
     return <Redirect to={redirectURL} />;
   }
+  console.log(members);
 
   return (
     <Container>
+      <Link to={'/'}>Back Home</Link>
       <Main>
-        <QRCode value={code} size={300} />
+        <QRCode value={code} size={240} />
         <div>{room.title}</div>
-        <Content></Content>
+        <Member>
+          {members.map((member: IUser, index: number) => (
+            <MemberItem key={member.index}>
+              <img src="" />
+              <MemberName>
+                <span>{member.name}</span>
+              </MemberName>
+            </MemberItem>
+          ))}
+        </Member>
       </Main>
     </Container>
   );
 };
 
 const mapState = (state: any) => ({
-  access_token: state.access_token,
+  user: state.user,
   room: state.room,
 });
 

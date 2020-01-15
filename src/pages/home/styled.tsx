@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Main = styled('div')`
-  margin: 30px 0;
+  margin: 20px;
 `;
 
 const Content = styled('div')``;

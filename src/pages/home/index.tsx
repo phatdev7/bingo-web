@@ -14,7 +14,7 @@ interface IProps {
   requestAccessToken: (callback: Function) => void;
   getCurrentRoom: () => void;
   addCurrentRoom: (title: string, callback: Function) => void;
-  access_token: {
+  user: {
     token: string;
   };
   room: {
@@ -83,7 +83,7 @@ const Home: React.FC<IProps> = props => {
 };
 
 const mapState = (state: any) => ({
-  access_token: state.access_token,
+  user: state.user,
   room: state.room,
 });
 

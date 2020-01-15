@@ -7,6 +7,6 @@ interface IParams {
 
 export default (socket: SocketIOClient.Socket) => {
   socket.on(Commands.joinRoom, (params: IParams) => {
-    console.log(params.error);
+    // console.log(params.error);
   });
 };

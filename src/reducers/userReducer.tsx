@@ -1,13 +1,9 @@
-export const UPDATE_TOKEN = 'UPDATE_TOKEN';
+export const UPDATE_USER = 'UPDATE_USER';
 
-const initialState = {
-  token: '',
-};
+const initialState = {};
 
 const mapActions: any = {
-  [UPDATE_TOKEN]: (state: any, payload: any) => ({
-    token: payload,
-  }),
+  [UPDATE_USER]: (state: any, payload: any) => payload,
 };
 
 const reducer = (state = initialState, action: any) => {

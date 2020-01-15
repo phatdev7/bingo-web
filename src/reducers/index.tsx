@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import access_token from './tokenReducer';
+import user from './userReducer';
 import room from './roomReducer';
 import card from './cardReducer';
 
 export default combineReducers({
-  access_token,
+  user,
   room,
   card,
 });
