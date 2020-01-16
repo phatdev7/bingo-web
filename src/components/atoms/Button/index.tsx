@@ -18,7 +18,7 @@ const Button: React.FC<IProps> = props => {
   };
 
   return (
-    <Main>
+    <Main style={{ ...props.style, backgroundColor: 'unset' }}>
       <Content
         {...props}
         onMouseDown={onMouseDown}
@@ -27,10 +27,10 @@ const Button: React.FC<IProps> = props => {
         onTouchEnd={onMouseUp}
         onMouseLeave={onMouseLeave}
         style={{
-          top: pressIn ? '4px' : 0,
+          backgroundColor: props.style?.backgroundColor,
+          marginTop: pressIn ? '4px' : 0,
           borderBottomLeftRadius: pressIn ? '12px' : '8px',
           borderBottomRightRadius: pressIn ? '12px' : '8px',
-          ...props.style,
         }}
       >
         {props.children}

@@ -42,7 +42,7 @@ const Register: React.FC<IProps> = props => {
           {(form: any, setFormKeys: any) => (
             <FormDiv>
               <Input
-                label={'Name'}
+                label={'NICK NAME'}
                 value={form['name'].value}
                 error={form['name'].error}
                 onChange={setFormKeys['name']}

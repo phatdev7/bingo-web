@@ -6,7 +6,6 @@ const Main = styled('div')`
 `;
 
 const Content = styled('button')`
-  position: absolute;
   width: 100%;
   height: 42px;
   border-top-left-radius: 12px;

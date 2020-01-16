@@ -16,8 +16,6 @@ const RoomItem = styled('button')`
   width: 100%;
   outline: none;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
   padding: 6px 12px;
   margin-top: 20px;
   background-color: #eeeeee;
@@ -33,4 +31,14 @@ const RoomItem = styled('button')`
   }
 `;
 
-export { Main, Content, FormDiv, RoomItem };
+const FieldRow = styled('div')`
+  display: flex;
+`;
+
+const RoomStatus = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export { Main, Content, FormDiv, RoomItem, FieldRow, RoomStatus };

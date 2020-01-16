@@ -50,6 +50,6 @@ function* workerAddCurrentRoomAsync(action: any) {
   }
 }
 
-const requestAddCurrentRoom = (title: string) => {
-  return REST.post('room', { title });
+const requestAddCurrentRoom = (value: any) => {
+  return REST.post('room', value);
 };

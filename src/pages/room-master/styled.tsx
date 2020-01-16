@@ -7,6 +7,17 @@ const Main = styled('div')`
   align-items: center;
 `;
 
+const TopContent = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Actions = styled('div')`
+  display: flex;
+  flex-direction: row;
+`;
+
 const FormDiv = styled('div')`
   display: flex;
   flex-direction: column;
@@ -14,12 +25,16 @@ const FormDiv = styled('div')`
 
 const Member = styled('div')`
   width: 100%;
+  height: calc(100vh - 310px);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  margin-top: 20px;
 `;
 
 const MemberItem = styled('div')`
   display: flex;
+  margin-bottom: 12px;
 
   & > img {
     width: 30px;
@@ -32,4 +47,4 @@ const MemberItem = styled('div')`
 
 const MemberName = styled('div')``;
 
-export { Main, FormDiv, Member, MemberItem, MemberName };
+export { Main, TopContent, Actions, FormDiv, Member, MemberItem, MemberName };
