@@ -36,7 +36,10 @@ const Register: React.FC<IProps> = props => {
         <Form
           ref={formRef}
           initialForm={{
-            name: { value: '', validate: [{ isRequired: true, message: 'Name is required' }] },
+            name: {
+              value: '',
+              validate: [{ isRequired: true, message: 'Name is required' }],
+            },
           }}
         >
           {(form: any, setFormKeys: any) => (

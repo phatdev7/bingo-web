@@ -18,26 +18,25 @@ const App: React.FC<IProps> = props => {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    props.accessToken((err: any, user: any) => {
-      if (!err && user.token) {
-        SocketService.init('/bingo', () => {
-          setStatus('app');
-        });
-      } else {
-        setStatus('auth');
-      }
-    });
+    if (!props.user.token) {
+      props.accessToken((err: any, user: any) => {
+        if (err || !user.token) {
+          setStatus('auth');
+        }
+      });
+    } else {
+      SocketService.init('/bingo', () => {
+        setStatus('app');
+      });
+    }
   }, [props.user.token]);
 
   if (status === 'auth') {
     return (
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route path="/">
             <Register />
-          </Route>
-          <Route path="*">
-            <NotFound />
           </Route>
         </Switch>
       </Router>

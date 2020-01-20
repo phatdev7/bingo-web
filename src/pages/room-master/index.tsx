@@ -30,13 +30,19 @@ interface IUser {
   index: string;
 }
 
+interface IGame {
+  room_id: string;
+}
+
 let arr: any[] = [];
 
 const RoomMaster: React.FC<IProps> = props => {
-  const [room, setRoom] = useState<IRoom>({ _id: '', title: '' });
+  const [room, setRoom] = useState<IRoom>();
   const [code, setCode] = useState('');
   const [members, setMembers] = useState<any>([]);
   const [redirectURL, setRedirecURL] = useState('');
+  const [game, setGame] = useState<IGame>();
+  const [countDown, setCountDown] = useState();
 
   useEffect(() => {
     const id = window.location.pathname.replace('/room-master/', '');
@@ -60,17 +66,37 @@ const RoomMaster: React.FC<IProps> = props => {
     sendData.addParam('user', props.user);
     SocketService.send(sendData);
 
-    SocketService.register(Commands.joinRoom, (params: any) => {
-      if (params.error) {
-        setRedirecURL('/');
-      }
-    });
+    // SocketService.register(Commands.joinRoom, (params: any) => {
+    //   if (params.error) {
+    //     setRedirecURL('/');
+    //   }
+    // });
 
     SocketService.register(Commands.scanQRCode, (params: any) => {
       if (!params.error) {
         setCode(params.new_code);
         arr = [...arr, { ...params.user, index: params.new_code }];
         setMembers(arr);
+      }
+    });
+
+    SocketService.register(Commands.createGame, (params: any) => {
+      if (!params.error) {
+        setGame(params.game);
+      }
+    });
+
+    SocketService.register(Commands.countDownInitGame, (params: any) => {
+      if (!params.error) {
+        setCountDown(params.count_down);
+        console.log(params.count_down);
+      }
+    });
+
+    SocketService.register(Commands.dialGame, (params: any) => {
+      if (!params.error) {
+        setGame(params.game);
+        console.log(params.game);
       }
     });
   }, []);
@@ -100,7 +126,7 @@ const RoomMaster: React.FC<IProps> = props => {
       <Main>
         <TopContent>
           <QRCode value={code} size={180} />
-          <div>{room.title}</div>
+          <div>{room && room.title ? room.title : ''}</div>
           <Actions>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
               <Button>Back Home</Button>
