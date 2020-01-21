@@ -1,14 +1,30 @@
 import styled from 'styled-components';
+import { PRIMARY } from 'constant';
 
-const Main = styled('div')`
-  margin: 20px;
+const Main = styled('div')``;
+
+const Header = styled('div')`
+  height: 48px;
+  background-color: ${PRIMARY};
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+
+  & > div {
+    color: #fff;
+    cursor: pointer;
+  }
 `;
 
-const Content = styled('div')``;
+const Content = styled('div')`
+  margin: 20px;
+`;
 
 const FormDiv = styled('div')`
   display: flex;
   flex-direction: column;
+  margin: 20px;
 `;
 
 const RoomItem = styled('button')`
@@ -41,4 +57,4 @@ const RoomStatus = styled('div')`
   justify-content: space-between;
 `;
 
-export { Main, Content, FormDiv, RoomItem, FieldRow, RoomStatus };
+export { Main, Header, Content, FormDiv, RoomItem, FieldRow, RoomStatus };

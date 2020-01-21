@@ -63,7 +63,6 @@ const RoomMaster: React.FC<IProps> = props => {
 
     const sendData = SocketService.makeSendData(Commands.joinRoom);
     sendData.addParam('room_id', id);
-    sendData.addParam('user', props.user);
     SocketService.send(sendData);
 
     // SocketService.register(Commands.joinRoom, (params: any) => {
@@ -89,14 +88,12 @@ const RoomMaster: React.FC<IProps> = props => {
     SocketService.register(Commands.countDownInitGame, (params: any) => {
       if (!params.error) {
         setCountDown(params.count_down);
-        console.log(params.count_down);
       }
     });
 
     SocketService.register(Commands.dialGame, (params: any) => {
       if (!params.error) {
         setGame(params.game);
-        console.log(params.game);
       }
     });
   }, []);
@@ -113,7 +110,6 @@ const RoomMaster: React.FC<IProps> = props => {
     const id = window.location.pathname.replace('/room-master/', '');
     const sendData = SocketService.makeSendData(Commands.createGame);
     sendData.addParam('room_id', id);
-    sendData.addParam('user', props.user);
     SocketService.send(sendData);
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, EventHandler } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Main, Content, FormDiv, RoomItem, FieldRow, RoomStatus } from './styled';
+import { Main, Header, Content, FormDiv, RoomItem, FieldRow, RoomStatus } from './styled';
 import Form from 'components/molecules/Form';
 import Input from 'components/atoms/Input';
 import Button from 'components/atoms/Button';
@@ -11,7 +11,6 @@ import Commands from 'services/Commands';
 import REST from 'utils/api';
 
 interface IProps {
-  requestAccessToken: (callback: Function) => void;
   getCurrentRoom: () => void;
   addCurrentRoom: (title: string, callback: Function) => void;
   user: {
@@ -44,6 +43,10 @@ const Home: React.FC<IProps> = props => {
     setRedirecURL(`room-master/${e.currentTarget.value}`);
   };
 
+  const onLoginQRCode = () => {
+    
+  }
+
   if (redirectURL) {
     return <Redirect to={redirectURL} />;
   }
@@ -51,6 +54,9 @@ const Home: React.FC<IProps> = props => {
   return (
     <Container>
       <Main>
+        <Header>
+          <div onClick={onLoginQRCode}>QRCode</div>
+        </Header>
         <Form
           ref={formRef}
           initialForm={{
@@ -130,11 +136,6 @@ const mapState = (state: any) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  requestAccessToken: (callback: Function) =>
-    dispatch({
-      type: 'WATCH_ACCESS_TOKEN',
-      callback,
-    }),
   getCurrentRoom: () =>
     dispatch({
       type: 'WATCH_GET_CURRENT_ROOM',

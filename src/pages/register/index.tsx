@@ -8,24 +8,16 @@ import { Container } from 'components/grid';
 import { SECODARY } from 'constant';
 
 interface IProps {
-  register: (name: string, callback: Function) => void;
+  register: (name: string) => void;
 }
 
 const Register: React.FC<IProps> = props => {
   const formRef: any = useRef(null);
 
-  useEffect(() => {}, []);
-
   const onCreate = () => {
     formRef.current.submit((err: any, values: any) => {
       if (!err) {
-        props.register(values.name, (err: any, user: any) => {
-          // if (!err && user.token) {
-          //   SocketService.init('/bingo', () => {
-          //     props.navigation.navigate('App');
-          //   });
-          // }
-        });
+        props.register(values.name);
       }
     });
   };
@@ -67,11 +59,10 @@ const mapState = (state: any) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  register: (name: string, callback: Function) =>
+  register: (name: string) =>
     dispatch({
       type: 'WATCH_REGISTER',
       payload: name,
-      callback,
     }),
 });
 
